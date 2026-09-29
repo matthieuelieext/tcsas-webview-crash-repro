@@ -1,0 +1,2 @@
+<web-view wx:if="{{ show }}" src="/static/index.html" />
+<view wx:else>Web-view destroyed</view>

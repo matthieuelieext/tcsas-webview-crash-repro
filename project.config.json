@@ -1,0 +1,30 @@
+{
+	"projectid": "touristappid",
+	"TCSASappid": "touristId",
+	"TCSASLibVersion": "2.3.9",
+	"tmfLibVersion": "2.3.9",
+	"projectname": "webview-crash-repro",
+	"compileType": "miniprogram",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"newFeature": true,
+		"postcss": false,
+		"minified": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"uploadWithSourceMap": true,
+		"uglifyFileName": true,
+		"remoteDebugLogEnable": true,
+		"prefetch": false
+	},
+	"packOptions": {
+		"ignore": [
+			{
+				"path": "*.md"
+			}
+		]
+	},
+	"scripts": {},
+	"condition": {}
+}
