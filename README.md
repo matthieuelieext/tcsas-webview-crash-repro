@@ -32,8 +32,12 @@ The web-view is removed and "Web-view destroyed" is displayed, as on a real devi
 
 ## Actual
 
-TCSAS DevTools crashes as soon as the web-view is destroyed. No error is logged beforehand, and
-a `try/catch` around the navigation call does not catch anything.
+The whole TCSAS DevTools application quits as soon as the web-view is destroyed. The issue
+reproduces every time (100 %).
+
+- No error is logged in the DevTools console beforehand.
+- A `try/catch` around the navigation call does not catch anything.
+- No macOS crash report is written in `~/Library/Logs/DiagnosticReports`.
 
 ## Code
 
@@ -56,3 +60,15 @@ happens whatever the way the web-view is left, as long as the user clicked insid
 | Click → `location.href = '...?done=1'`                           | `setData` in `bindload` handler      | Crash  |
 | Click → `wx.miniProgram.reLaunch(...)`                           | Navigation                           | Crash  |
 | Click → `sendWebviewEvent`, host calls `wx.redirectTo` / `wx.reLaunch` | Navigation                     | Crash  |
+
+## Additional finding: no crash if the web-view is hidden first
+
+The crash only happens when the clicked web-view is destroyed **while it is still displayed**.
+If the page is first hidden, destroying it afterwards works:
+
+1. Click inside the web-view.
+2. `wx.navigateTo` to another page: the web-view page stays in the stack, hidden. → OK
+3. `wx.reLaunch` from the new page (in `onLoad`, with or without delay): the web-view page is
+   destroyed. → OK
+
+We use this flow as a workaround in our mini program. It may help locate the issue on your side.
